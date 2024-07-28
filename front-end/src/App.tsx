@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import { createTheme, ThemeProvider } from "@mui/material";
+
+const theme = createTheme({
+  palette: {
+    text: { primary: "#0B0E1B" },
+    background: { default: "#F3F4FA" },
+    primary: { main: "#4F59BA" },
+    secondary: { main: "#B597D6" },
+    success: { main: "#B36FC7" },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 450,
+      md: 800,
+      lg: 1200,
+      xl: 1700,
+    },
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<h1>hi</h1>} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
