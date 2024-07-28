@@ -1,7 +1,7 @@
 import { hashSync } from "bcryptjs";
 import { Document, Model, model, models, Schema } from "mongoose";
 
-interface User extends Document {
+export interface UserModelType extends Document {
   email: string;
   username: string;
   biography?: string;
@@ -15,7 +15,7 @@ interface User extends Document {
   updatedAt?: Date;
 }
 
-const schema: Schema<User> = new Schema(
+const schema: Schema<UserModelType> = new Schema(
   {
     email: {
       type: String,
@@ -40,7 +40,6 @@ const schema: Schema<User> = new Schema(
     },
     picture: {
       type: String,
-      required: true,
     },
     role: {
       type: String,
@@ -59,10 +58,10 @@ const schema: Schema<User> = new Schema(
   { timestamps: true }
 );
 
-schema.pre<User>("save", async function (next) {
+schema.pre<UserModelType>("save", async function (next) {
   try {
     if (this.isModified("password")) {
-      this.password = await hashSync(this.password, 10);
+      this.password = hashSync(this.password, 10);
     }
     next();
   } catch (err: any) {
@@ -70,5 +69,5 @@ schema.pre<User>("save", async function (next) {
   }
 });
 
-const userModel: Model<User> = models.users || model("users", schema);
+const userModel: Model<UserModelType> = models.users || model("users", schema);
 export default userModel;
