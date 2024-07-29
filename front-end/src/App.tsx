@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { createTheme, ThemeProvider } from "@mui/material";
+import RegisterPage from "./components/templates/register";
 
 const theme = createTheme({
   palette: {
@@ -27,6 +28,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<h1>hi</h1>} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
