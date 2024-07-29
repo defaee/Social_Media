@@ -14,7 +14,7 @@ export const authValidatorSchema = yup.object({
     .max(10, "name must be at most 10 chars long"),
   password: yup
     .string()
-    .required("password is a valid field")
+    .required("password is a required field")
     .min(8, "password must be at least 8 chars long")
     .max(24, "password must be at most 24 chars long"),
 });

@@ -1,6 +1,7 @@
 import { Button, TextField } from "@mui/material";
+import axios from "axios";
 import { FormEvent, useState } from "react";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -12,34 +13,39 @@ const RegisterPage = () => {
 
   const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const res = await fetch(`${backendUrl}/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password, name, username }),
-    });
-
-    if (res.status !== 201) {
-      const { msg } = await res.json();
-      Swal.fire({
-        title: msg,
-        icon: "error",
-        confirmButtonText: "Done",
-      });
-      return false;
+    try {
+      const res = await axios.post(
+        `${backendUrl}/auth/register`,
+        { name, username, email, password },
+        {
+          withCredentials: true,
+        }
+      );
+      return console.log("res is =>", res);
+    } catch (err) {
+      console.log("error is =>", err);
     }
 
-    const { msg } = await res.json();
-    Swal.fire({
-      title: msg,
-      icon: "success",
-      confirmButtonText: "Done",
-    });
-    setEmail("");
-    setName("");
-    setUsername("");
-    setPassword("");
+    //   if (res.status !== 201) {
+    //     const { msg } = await res.json();
+    //     Swal.fire({
+    //       title: msg,
+    //       icon: "error",
+    //       confirmButtonText: "Done",
+    //     });
+    //     return false;
+    //   }
+
+    //   const { msg } = await res.json();
+    //   Swal.fire({
+    //     title: msg,
+    //     icon: "success",
+    //     confirmButtonText: "Done",
+    //   });
+    //   setEmail("");
+    //   setName("");
+    //   setUsername("");
+    //   setPassword("");
   };
 
   return (
